@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>مكتبة حاسوب</title>
     @vite(['resources/css/app.css'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -11,11 +12,75 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f0f0f0;
+        }
+
+        .score {
+            display: block;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-wrap {
+            display: inline-block;
+            position: relative;
+            height: 19px;
+        }
+
+        .score .stars-active {
+            color: #FFCA00;
+            position: relative;
+            z-index: 10;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .score .stars-inactive {
+            color: lightgray;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .rating {
+            overflow: hidden;
+            display: inline-block;
+            position: relative;
+            font-size: 20px;
+        }
+        .rating-star {
+            padding: 0 5px;
+            margin: 0;
+            cursor: pointer;
+            display: block;
+            float: left;
+        }
+        .rating-star:after {
+            position: relative;
+            font-family: "Font Awesome 5 Free";
+            content: '\f005';
+            color: lightgrey;
+        }
+        .rating-star.checked ~ .rating-star:after,
+        .rating-star.checked:after {
+            content: '\f005';
+            color: #FFCA00;
+        }
+        .rating:hover .rating-star:after {
+            content: '\f005';
+            color: lightgrey;
+        }
+        .rating-star:hover ~ .rating-star:after,
+        .rating .rating-star:hover:after {
+            content: '\f005';
+            color: #FFCA00;
         }
     </style>
     @yield('head')
@@ -157,6 +222,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/160daa7df6.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @yield('script')
 </body>
 </html>
