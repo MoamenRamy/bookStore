@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -82,5 +84,15 @@ class User extends Authenticatable
     public function bookRating(Book $book)
     {
         return $this->rated($book) ? $this->ratings->where('book_id', $book->id)->first() : Null;
+    }
+
+    public function booksInCart()
+    {
+        return $this->belongsToMany('App\Models\Book')->withPivot(['number_of_copies', 'bought', 'price'])->wherePivot('bought', False);
+    }
+
+    public function ratedpurchase()
+    {
+        return $this->belongsToMany('App\Models\Book')->withPivot(['bought'])->wherePivot('bought', true);
     }
 }

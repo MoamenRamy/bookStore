@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PublishersController;
 use App\Models\Book;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,12 +65,13 @@ Route::prefix('/admin')->middleware('can:update-books')->group(function() {
     Route::resource('/users', 'App\Http\Controllers\UsersController')->middleware('can:update-users');
 });
 
-/*
-Route::get('/admin/books', [BooksController::class, 'index'])->name('books.index');
-Route::get('/admin/books/create', [BooksController::class, 'create'])->name('books.create');
-Route::post('/admin/Books', [BooksController::class, 'store'])->name('books.store');
-Route::get('/admin/books/{book}' , [BooksController::class , 'show'])->name('books.show' ,'{book}');
-Route::get('/admin/books/{book}/edit', [BooksController::class, 'edit'])->name('books.edit', '{book}');
-Route::patch('/admin/books/{book}', [BooksController::class, 'update'])->name('books.update');
-Route::delete('/admin/books/{book}', [BooksController::class, 'destroy'])->name('books.destroy');
-*/
+
+Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/removeOne/{book}', [CartController::class, 'removeOne'])->name('cart.remove_one');
+Route::post('/removeAll/{book}', [CartController::class, 'removeAll'])->name('cart.remove_all');
+
+
+//credit cart
+Route::get('/checkout', [PurchaseController::class, 'creditCheckout'])->name('credit.checkout');
+Route::post('/checkout', [PurchaseController::class, 'purchase'])->name('products.purchase');

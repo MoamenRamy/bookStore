@@ -10,6 +10,7 @@ use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Traits\ImageUploadTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class BooksController extends Controller
@@ -164,7 +165,11 @@ class BooksController extends Controller
 
     public function details(Book $book)
     {
-        return view('books.details', compact('book'));
+        $bookfind = 0;
+        if(Auth::check()){
+            $bookfind = auth()->user()->ratedpurchase()->where('book_id', $book->id)->first();
+        }
+        return view('books.details', compact('book', 'bookfind'));
     }
 
     public function rate(Request $request, Book $book)

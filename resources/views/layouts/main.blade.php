@@ -20,6 +20,11 @@
             background-color: #f0f0f0;
         }
 
+        .bg-cart {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
         .score {
             display: block;
             font-size: 16px;
@@ -96,6 +101,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
+                        @auth
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('cart.view')}}">
+                                        @if(Auth::user()->booksInCart()->count() > 0)
+                                            <span class="badge bg-secondary">{{ Auth::user()->booksInCart()->count() }}</span>
+                                        @else
+                                            <span class="badge bg-secondary">0</span>
+                                        @endif
+                                            العربة
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                </li>
+                        @endauth
                         <li class="nav-item">
                             <a href="{{route('gallery.categories.index')}}" class="nav-link">
                                 التصنيفات
