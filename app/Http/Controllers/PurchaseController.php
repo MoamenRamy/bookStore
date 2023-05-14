@@ -8,7 +8,7 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Carbon\Carbon;
 use App\Mail\OrderMail;
 use Illuminate\Support\Facades\Mail;
-//use App\models\Shopping;
+use App\models\Shopping;
 
 class PurchaseController extends Controller
 {
@@ -119,11 +119,12 @@ class PurchaseController extends Controller
         }
         return redirect('/cart')->with('message', 'تم شراء المنتج بنجاح');
     }
-/*
+    // end credit code
+    
     public function myProduct()
     {
         $userId = auth()->user()->id;
-        $myBooks = User::find($userId)->purchedProduct;
+        $myBooks = User::find($userId)->purchaseProduct;
 
         return view('books.myProduct', compact('myBooks'));
     }
@@ -132,6 +133,5 @@ class PurchaseController extends Controller
     {
         $allBooks = shopping::with(['user', 'book'])->where('bought', true)->get();
         return view('admin.books.allProduct', compact('allBooks'));
-    }*/
-    // end credit code
+    }
 }

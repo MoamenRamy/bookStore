@@ -61,7 +61,7 @@
             </li>
 
             <li class="nav-item {{ request()->is('admin/allproduct*') ? 'active' : '' }}">
-            <a class="nav-link text-right" href="#">
+            <a class="nav-link text-right" href="{{route('all.product')}}">
             <i class="fas fa-shopping-bag"></i>
                 <span>المشتريات</span></a>
             </li>
