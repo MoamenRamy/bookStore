@@ -8,6 +8,7 @@
     <title>مكتبة حاسوب</title>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     @vite(['resources/css/app.css'])
 
 
@@ -89,54 +90,61 @@
             content: '\f005';
             color: #FFCA00;
         }
+        .collapse {
+            visibility: visible;
+        }
     </style>
     @yield('head')
 </head>
 <body dir="rtl" style="text-align: right">
 
-    <div class="">
-            <nav class="navbar navbar-expand-lg navbar-light bg-white">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{{ url('/') }}">المكتبة</a>
+
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url('/') }}">مكتبة حسوب</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
                         @auth
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{route('cart.view')}}">
-                                        @if(Auth::user()->booksInCart()->count() > 0)
-                                            <span class="badge bg-secondary">{{ Auth::user()->booksInCart()->count() }}</span>
-                                        @else
-                                            <span class="badge bg-secondary">0</span>
-                                        @endif
-                                            العربة
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </a>
-                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('cart.view') }}">
+                                    @if(Auth::user()->booksInCart()->count() > 0)
+                                        <span class="badge bg-secondary">{{ Auth::user()->booksInCart()->count() }}</span>
+                                    @else
+                                        <span class="badge bg-secondary">0</span>
+                                    @endif
+                                        العربة
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            </li>
                         @endauth
                         <li class="nav-item">
-                            <a href="{{route('gallery.categories.index')}}" class="nav-link">
-                                التصنيفات
+                            <a class="nav-link" href="{{ route('gallery.categories.index') }}">
+                                    التصنيفات
                                 <i class="fas fa-list"></i>
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="{{route('gallery.publishers.index')}}" class="nav-link">
+                            <a class="nav-link" href="{{ route('gallery.publishers.index') }}">
                                 الناشرون
                                 <i class="fas fa-table"></i>
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="{{route('gallery.authors.index')}}" class="nav-link">
+                            <a class="nav-link" href="{{ route('gallery.authors.index') }}">
                                 المؤلفون
                                 <i class="fas fa-pen"></i>
                             </a>
                         </li>
+
                         @auth
                             <li class="nav-item">
-                                <a href="{{route('my.product')}}" class="nav-link">
+                                <a class="nav-link" href="{{ route('my.product') }}">
                                     مشترياتي
                                     <i class="fas fa-basket-shopping"></i>
                                 </a>
@@ -147,27 +155,26 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                             <li class="nav-item">
-                                <a href="{{ route('login') }}" class="nav-link">{{__('تسجيل الدخول')}}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('تسجيل الدخول') }}</a>
                             </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a href="{{ route('register') }}" class="nav-link">{{__('انشاء حساب')}}</a>
-                            </li>
-                        @endif
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('إنشاء حساب') }}</a>
+                                </li>
+                            @endif
                         @else
                             <li class="nav-item dropdown justify-content-left">
-                                <a href="#" id="navbarDropdown" class="nav-link" data-bs-toggle="dropdown">
-                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}">
+                                <a id="navbarDropdown" class="nav-link" href="#" data-bs-toggle="dropdown">
+                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                 </a>
+
                                 <div class="dropdown-menu dropdown-menu-left px-2 text-right mt-2">
                                     @can('update-books')
-                                        <a href="{{route('admin.index')}}" class="dropdown-item">لوحة الاداره</a>
+                                        <a href="{{ route('admin.index') }}" class="dropdown-item">لوحة الإدارة</a>
                                     @endcan
-                                    <!-- Responsive Settings Options -->
+
                                     <div class="pt-4 pb-1 border-t border-gray-200">
                                         <div class="flex items-center px-4">
-
-
                                             <div>
                                                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                                             </div>
@@ -176,7 +183,7 @@
                                         <div class="mt-3 space-y-1">
                                             <!-- Account Management -->
                                             <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                                                {{ __('Profile') }}
+                                                {{ __('الملف الشخصي') }}
                                             </x-responsive-nav-link>
 
                                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -190,9 +197,9 @@
                                                 @csrf
 
                                                 <x-responsive-nav-link href="{{ route('logout') }}"
-                                                            onclick="event.preventDefault();
-                                                            this.closest('form').submit();">
-                                                    {{ __('Log Out') }}
+                                                    onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                                    {{ __('تسجيل خروج') }}
                                                 </x-responsive-nav-link>
                                             </form>
 
@@ -223,7 +230,7 @@
                                                 </div>
 
                                                 @foreach (Auth::user()->allTeams() as $team)
-                                                    <x-switchable-team :team="$team" component="responsive-nav-link" />
+                                                    <x-switchable-team :team="$team" component="jet-responsive-nav-link" />
                                                 @endforeach
                                             @endif
                                         </div>
@@ -233,13 +240,14 @@
                         @endguest
                     </ul>
                 </div>
-                </div>
-            </nav>
+            </div>
+        </nav>
+
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
 
-    <main class="py-4">
-        @yield('content')
-    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
